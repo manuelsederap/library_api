@@ -7,5 +7,9 @@ defmodule LibraryApiWeb.Router do
 
   scope "/api", LibraryApiWeb do
     pipe_through :api
+    
+    scope "/library" do
+      post "/create_person", PersonController, :create_person
+    end
   end
 end

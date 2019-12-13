@@ -1,4 +1,4 @@
-defmodule LibraryApiWeb.Schemas.BorrowedBooks do
+defmodule LibraryApiWeb.Schemas.BorrowedBook do
   @moduledoc false
 
   use LibraryApiWeb.Schema
@@ -12,10 +12,10 @@ defmodule LibraryApiWeb.Schemas.BorrowedBooks do
 
     timestamps()
 
-    has_many :books, LibraryApiWeb.Schemas.Books,
-      on_delete: :delete_all, foreign_key: :book_id
-    has_many :persons, LibraryApiWeb.Schemas.Persons,
-      on_delete: :delete_all, foreign_key: :person_id
+    has_many :books, LibraryApiWeb.Schemas.Book,
+      on_delete: :delete_all, foreign_key: :id
+    has_many :persons, LibraryApiWeb.Schemas.Person,
+      on_delete: :delete_all, foreign_key: :id
   end
 
   def changeset(struct, params \\ %{}) do

@@ -1,4 +1,4 @@
-defmodule LibraryApiWeb.Schemas.Persons do
+defmodule LibraryApiWeb.Schemas.Person do
   @moduledoc false
 
   use LibraryApiWeb.Schema

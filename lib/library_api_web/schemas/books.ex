@@ -1,4 +1,4 @@
-defmodule LibraryApiWeb.Schemas.Books do
+defmodule LibraryApiWeb.Schemas.Book do
   @moduledoc false
 
   use LibraryApiWeb.Schema
