@@ -15,6 +15,7 @@
                         'Elixir.LibraryApiWeb.Schemas.Books',
                         'Elixir.LibraryApiWeb.Schemas.BorrowedBooks',
                         'Elixir.LibraryApiWeb.Schemas.Persons',
+                        'Elixir.LibraryApiWeb.Schemas.Users',
                         'Elixir.LibraryApiWeb.UserSocket']},
               {registered,[]},
               {vsn,"0.0.1"},
