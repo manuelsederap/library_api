@@ -63,4 +63,34 @@ defmodule LibraryApiWeb.PersonControllerTest do
       assert json_response(conn, 200)["errors"]["id_no"] == "Person already exist."
     end
   end
+
+  describe "get person" do
+    test "with valid parameters" do
+      params = %{
+        id_no: "123AVCX123",
+        contact_no: "09201234567"
+      }
+      conn = post(build_conn(), "/api/library/get_person", params)
+      assert json_response(conn, 200)["id_no"] == "123AVCX123"
+    end
+
+    test "with empty parameters" do
+      params = %{
+        id_no: "",
+        contact_no: ""
+      }
+      conn = post(build_conn(), "/api/library/get_person", params)
+      assert json_response(conn, 200)["errors"]["id_no"] == "Enter id no"
+      assert json_response(conn, 200)["errors"]["contact_no"] == "Enter contact no"
+    end
+
+    test "with person does not exist" do
+      params = %{
+        id_no: "invalid",
+        contact_no: "98746541"
+      }
+      conn = post(build_conn(), "/api/library/get_person", params)
+      assert json_response(conn, 200)["errors"]["id_no"] == "Person does not exist."
+    end        
+  end
 end

@@ -10,6 +10,7 @@ defmodule LibraryApiWeb.Router do
     
     scope "/library" do
       post "/create_person", PersonController, :create_person
+      post "/get_person", PersonController, :get_person
     end
   end
 end

@@ -20,6 +20,14 @@ defmodule LibraryApiWeb.PersonController do
     |> return_result("result.json", conn)
   end
 
+  def get_person(conn, params) do
+    :get_person
+    |> PersonContext.validate_params(params)
+    |> ValidationContext.valid_changeset()
+    |> PersonContext.get_person()
+    |> return_result("result.json", conn)
+  end
+
   defp return_result({:error, changeset}, _, conn) do
     conn
     |> put_status(200)
