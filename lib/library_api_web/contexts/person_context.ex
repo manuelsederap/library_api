@@ -70,16 +70,8 @@ defmodule LibraryApiWeb.Contexts.PersonContext do
 
   def create_person({:error, changeset}), do: {:error, changeset}
   def create_person(params) do
-    middle_name = params[:middle_name] || ""
-    suffix = params[:suffix] || ""
-    address = params[:address] || ""
-    
     %Person{}
-    |> Person.changeset(
-      params
-      |> Map.put(:middle_name, middle_name)
-      |> Map.put(:suffix, suffix)
-      |> Map.put(:address, address))
+    |> Person.changeset(params)
     |> Repo.insert()
     |> case do
       {:ok, _person} ->
