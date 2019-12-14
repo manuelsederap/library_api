@@ -1,22 +1,66 @@
 defmodule LibraryApiWeb.PersonControllerTest do
   use LibraryApiWeb.ConnCase
 
+  setup do
+    insert(:person, %{
+      first_name: "#{Faker.Name.first_name}",
+      middle_name: "#{Faker.Name.last_name}",
+      last_name: "#{Faker.Name.last_name}",
+      suffix: "#{Faker.Name.suffix}",
+      birth_date: "1992-01-01",
+      id_type: "Drivers License",
+      id_no: "123AVCX123",
+      address: "Quezon City",
+      contact_no: "09201234567"
+    })
+
+    {:ok, %{}}
+  end
+
+  defp request_params(key, val) do
+    Map.put(%{
+      "first_name": "#{Faker.Name.first_name}",
+	    "middle_name": "#{Faker.Name.last_name}",
+	    "last_name": "#{Faker.Name.last_name}",
+	    "suffix": "#{Faker.Name.suffix}",
+	    "birth_date": "1995-01-01",
+	    "id_type": "SSSID",
+	    "id_no": "123AVCX123",
+	    "address": "",
+	    "contact_no": "09126548798"
+    }, key, val)
+  end
+
   describe "create person" do
     test "with valid parameters" do
+      conn = post(build_conn(), "/api/library/create_person", request_params(:id_no, "123XXX22"))
+      assert json_response(conn, 200) == %{"success" => true}
+    end
+
+    test "with empty parameters" do
       params = %{
-        	"first_name": "Jon",
-	        "middle_name": "Sand",
-	        "last_name": "Snow",
+        	"first_name": "",
+	        "middle_name": "",
+	        "last_name": "",
 	        "suffix": "",
-	        "birth_date": "1995-01-01",
-	        "id_type": "SSSID",
-	        "id_no": "123test",
-	        "address": "Makati",
-	        "contact_no": "09126548798"
+	        "birth_date": "",
+	        "id_type": "",
+	        "id_no": "",
+	        "address": "",
+	        "contact_no": ""
       }
 
       conn = post(build_conn(), "/api/library/create_person", params)
-      assert json_response(conn, 200) == %{"success" => true}
+      assert json_response(conn, 200)["errors"]["birth_date"] == "Enter birth date"
+      assert json_response(conn, 200)["errors"]["contact_no"] == "Enter contact no"
+      assert json_response(conn, 200)["errors"]["first_name"] == "Enter first name"
+      assert json_response(conn, 200)["errors"]["id_no"] == "Enter id no"
+      assert json_response(conn, 200)["errors"]["last_name"] == "Enter last name"
+    end
+
+    test "with person already exist" do
+      conn = post(build_conn(), "/api/library/create_person", request_params(:id_no, "123AVCX123"))
+      assert json_response(conn, 200)["errors"]["id_no"] == "Person already exist."
     end
   end
 end

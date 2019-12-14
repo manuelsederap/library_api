@@ -6,6 +6,7 @@
               {modules,['Elixir.LibraryApi','Elixir.LibraryApi.Application',
                         'Elixir.LibraryApi.Repo','Elixir.LibraryApiWeb',
                         'Elixir.LibraryApiWeb.Contexts.PersonContext',
+                        'Elixir.LibraryApiWeb.Contexts.UtilityContext',
                         'Elixir.LibraryApiWeb.Contexts.ValidationContext',
                         'Elixir.LibraryApiWeb.Endpoint',
                         'Elixir.LibraryApiWeb.ErrorHelpers',

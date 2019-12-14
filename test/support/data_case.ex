@@ -22,6 +22,7 @@ defmodule LibraryApi.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import LibraryApi.DataCase
+      import LibraryApi.Factory
     end
   end
 
@@ -43,11 +44,4 @@ defmodule LibraryApi.DataCase do
       assert %{password: ["password is too short"]} = errors_on(changeset)
 
   """
-  def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
-      Enum.reduce(opts, message, fn {key, value}, acc ->
-        String.replace(acc, "%{#{key}}", to_string(value))
-      end)
-    end)
-  end
 end

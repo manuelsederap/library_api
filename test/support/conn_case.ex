@@ -19,6 +19,7 @@ defmodule LibraryApiWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+      use LibraryApi.DataCase
       import LibraryApiWeb.Router.Helpers
 
       # The default endpoint for testing
@@ -26,12 +27,7 @@ defmodule LibraryApiWeb.ConnCase do
     end
   end
 
-
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(LibraryApi.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(LibraryApi.Repo, {:shared, self()})
-    end
+  setup _tags do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 
