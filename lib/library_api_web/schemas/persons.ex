@@ -32,4 +32,16 @@ defmodule LibraryApiWeb.Schemas.Person do
       :contact_no
     ])
   end
+
+  def update_changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [
+      :middle_name,
+      :last_name,
+      :id_type,
+      :id_no,
+      :address,
+      :contact_no
+    ])
+  end
 end

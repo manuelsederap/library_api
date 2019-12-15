@@ -26,7 +26,18 @@ defmodule LibraryApiWeb.PersonControllerTest do
 	    "birth_date": "1995-01-01",
 	    "id_type": "SSSID",
 	    "id_no": "123AVCX123",
-	    "address": "",
+	    "address": "Makati",
+	    "contact_no": "09126548798"
+    }, key, val)
+  end
+
+  defp update_person_request_params(key, val) do
+    Map.put(%{
+	    "middle_name": "#{Faker.Name.last_name}",
+	    "last_name": "#{Faker.Name.last_name}",
+	    "id_type": "SSSID",
+	    "id_no": "123AVCX123",
+	    "address": "Makati",
 	    "contact_no": "09126548798"
     }, key, val)
   end
@@ -108,6 +119,20 @@ defmodule LibraryApiWeb.PersonControllerTest do
         id_no: "not-exist"
       }
       conn = post(build_conn(), "/api/library/delete_person", params)
+      assert json_response(conn, 200)["errors"]["id_no"] == "Person does not exist."
+    end
+  end
+
+  describe "update person" do
+    test "with valid parameter" do
+      conn = post(build_conn(), "/api/library/update_person",
+        update_person_request_params(:id_no, "123AVCX123"))
+      assert json_response(conn, 200) == %{"message" => "Successfully Updated"}
+    end
+
+    test "with person does not exist" do
+      conn = post(build_conn(), "/api/library/update_person",
+        update_person_request_params(:id_no, "not-exist"))
       assert json_response(conn, 200)["errors"]["id_no"] == "Person does not exist."
     end
   end

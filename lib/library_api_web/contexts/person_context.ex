@@ -79,6 +79,28 @@ defmodule LibraryApiWeb.Contexts.PersonContext do
     |> is_valid_changeset?()
   end
 
+  def validate_params(:update_person, params) do
+    fields = %{
+      middle_name: :string,
+      last_name: :string,
+      id_type: :string,
+      id_no: :string,
+      address: :string,
+      contact_no: :string
+    }
+
+    {%{}, fields}
+    |> cast(params, Map.keys(fields))
+    |> validate_required([
+      :last_name,
+      :id_type,
+      :id_no,
+      :contact_no
+    ], message: "Enter")
+    |> validate_person(:delete_person)
+    |> is_valid_changeset?()
+  end
+
   defp validate_person(%{valid?: false} = changeset, :delete_person), do: changeset
   defp validate_person(%{changes: %{id_no: id_no}} = changeset, :delete_person) do
     id_no
@@ -158,6 +180,20 @@ defmodule LibraryApiWeb.Contexts.PersonContext do
         %{success: true}
       _ ->
         %{success: false}
+    end
+  end
+
+  def update_person({:error, changeset}), do: {:error, changeset}
+  def update_person(%{id_no: id_no} = params) do
+    Person
+    |> Repo.get_by(%{id_no: id_no})
+    |> Person.update_changeset(params)
+    |> Repo.update()
+    |> case do
+      {:ok, _persons} ->
+        %{message: "Successfully Updated"}
+      _ ->
+        %{message: "Update Failed"}
     end
   end
 
