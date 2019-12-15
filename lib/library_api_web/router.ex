@@ -14,6 +14,7 @@ defmodule LibraryApiWeb.Router do
       post "/get_person", PersonController, :get_person
       post "/delete_person", PersonController, :delete_person
       post "/update_person", PersonController, :update_person
+      post "/get_persons", PersonController, :get_persons
     end
   end
 end

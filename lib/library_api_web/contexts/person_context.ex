@@ -197,6 +197,26 @@ defmodule LibraryApiWeb.Contexts.PersonContext do
     end
   end
 
+  def get_persons do
+    Person
+    |> select([p], %{
+      first_name: p.first_name,
+      middle_name: p.middle_name,
+      last_name: p.last_name,
+      suffix: p.suffix,
+      birth_date: p.birth_date,
+      id_type: p.id_type,
+      id_no: p.id_no,
+      address: p.address,
+      contact_no: p.contact_no
+    })
+    |> Repo.all()
+    |> check_result()
+  end
+
+  defp check_result([]), do: %{message: "No Person Found."}
+  defp check_result(persons), do: persons
+
   def is_valid_changeset?(changeset), do: {changeset.valid?, changeset}
 end
 

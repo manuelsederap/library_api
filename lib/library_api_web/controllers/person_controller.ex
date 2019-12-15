@@ -44,6 +44,11 @@ defmodule LibraryApiWeb.PersonController do
     |> return_result("result.json", conn)
   end
 
+  def get_persons(conn, _params) do 
+    PersonContext.get_persons()
+    |> return_result("result.json", conn)
+  end
+
   defp return_result({:error, changeset}, _, conn) do
     conn
     |> put_status(200)
