@@ -9,8 +9,11 @@ defmodule LibraryApiWeb.Router do
     pipe_through :api
     
     scope "/library" do
+      ## Person
       post "/create_person", PersonController, :create_person
       post "/get_person", PersonController, :get_person
+      post "/delete_person", PersonController, :delete_person
+      post "/update_person", PersonController, :update_person
     end
   end
 end

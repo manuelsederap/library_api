@@ -93,4 +93,22 @@ defmodule LibraryApiWeb.PersonControllerTest do
       assert json_response(conn, 200)["errors"]["id_no"] == "Person does not exist."
     end        
   end
+
+  describe "delete person" do
+    test "with valid parameter" do
+      params = %{
+        id_no: "123AVCX123"
+      }
+      conn = post(build_conn(), "/api/library/delete_person", params)
+      assert json_response(conn, 200) == %{"success" => true}
+    end
+
+    test "with person does not exist" do
+      params = %{
+        id_no: "not-exist"
+      }
+      conn = post(build_conn(), "/api/library/delete_person", params)
+      assert json_response(conn, 200)["errors"]["id_no"] == "Person does not exist."
+    end
+  end
 end
